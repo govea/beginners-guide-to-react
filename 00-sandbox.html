@@ -1,0 +1,50 @@
+<body>
+  <div id="root"></div>
+  <!-- including react to be able to create react elements -->
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  
+  <!-- including react-dom to be able to render elements to the DOM -->
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+
+  <!-- using in-browser babel so we can use JSX and be like the cool kids -->
+  <!-- this means babel will look for <script type="text/babel"> -->
+  <!-- 1. compile the babel code on the fly, in the browser -->
+  <!-- 1. create a <script type="text/javascript" with the equivalent JS code" -->
+  <!-- there will be a <script type text/babel with the original code, and... -->
+  <!-- not to be used in production though !! you get this warning
+        You are using the in-browser Babel transformer. 
+        Be sure to precompile your scripts for production - https://babeljs.io/docs/setup/-->
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+
+  <!-- NOTE: if using in-browser babel you need to change the script tag from text/javascript to text/babel -->
+  <script type="text/babel">
+    const rootElement = document.getElementById('root')
+    const children = 'Hello World'
+    const className = 'container'
+    
+    // using jsx instead of createElement calls
+    // const element = <div className={className} children={children}/>  // in JSX you can have self-closing div tags!
+    
+    // or... you can just use the { spread the props using ...}
+    const props = {children, className}
+    // const element = <div id="app-root" {...props}/> 
+
+    // you can override property inside props by explicitly setting them:
+    const element = <div id="app-root" {...props} className="not-container"/> // not-container
+    
+    // However, here the last setting is {...props}, it will override "not-container"
+    const element = <div id="app-root" className="not-container" {...props} /> // container
+
+    // const element = React.createElement(
+    //   'div', {
+    //     className: 'container',
+    //     children: React.createElement('span', null, 'Hello', 'World')
+    //   }, 
+    //   // subsequent parameters are put in an array inside the 'children' property
+    //   // 'Hello World', 
+    //   // 'Bye World'
+    // )
+    console.log(element);
+    ReactDOM.render(element, rootElement)
+  </script>
+</body>

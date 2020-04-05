@@ -4,6 +4,8 @@
   <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
   <script type="text/babel">
+    // this is a custom hook!
+    // by convention the name starts with "use"
     function useLocalStorageState(key, defaultValue = '') {
       const [state, setState] = React.useState(
         () => window.localStorage.getItem(key) || defaultValue,

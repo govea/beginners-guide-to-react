@@ -4,11 +4,37 @@
   <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
   <script type="text/babel">
+    // Function component
+    // Needs to start with a Capital Letter! 
+    const Message = props => <div className="message">{props.msg}</div>
+
     const element = (
-      <>
-        <span>Hello</span> <span>World</span>
-      </>
+      // <> substitutes <React.Fragment>
+      // <>    
+      //   {Message({msg: 'Hello World'})}
+      //   {Message({msg: 'Bye World'})}
+      // </>
+
+      <div className="container">    
+        <Message msg='Hello World'/> 
+        <Message msg='Bye World' />
+      </div>
     )
+
+    // You can use props.children
+    const Message2 = props => <div className="message">{props.children}</div>
+    const element2 = (
+      // These 2 are equivalent
+      <div className="container">    
+        <Message2>
+          Hello World
+          <Message2 children="Bye World" />
+          <span>Hey there</span>
+        </Message2>
+      </div>
+    )
+
     ReactDOM.render(element, document.getElementById('root'))
+    ReactDOM.render(element2, document.getElementById('root'))
   </script>
 </body>

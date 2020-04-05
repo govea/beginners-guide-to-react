@@ -5,14 +5,43 @@
   <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
   <script type="text/babel">
     function CharacterCount({text}) {
+      // js
       return (
+        // js
         <div>
+          { /* limited js: only expressions */  }
           {`The text "${text}" has `}
           {text.length ? <strong>{text.length}</strong> : 'No'}
+          {/* in this line, we're switching back and forth between JS and JSX, check it out:
+          js text.length ? jsx<strong>{back to js: text.length} jsx</strong> : 'No' */}
           {' characters'}
         </div>
+        // js
       )
     }
+
+    /* Let's see WHY you can only have JS expressions inside {} inside JSX - line 12
+       the whole <div> The text 'bla' has 3 characters </div> gets transpiled into:
+
+       React.createElement(
+         "div", 
+         null, // 'null' since there are no props
+        "The text \"".concat(text, "\" has "), 
+                            text.length  ? React.createElement("strong", null, text.length) 
+                            : 'No', 
+                            ' characters'))
+
+        It wouldn't make sense to pass an If statement as a parameter:
+        React.createElement(
+          "div",
+          null,
+          if (statement) {}     //  SyntaxError: /Inline Babel script: Unexpected token
+        )
+
+        When it gets to JSX, babel is going to stick that code and pass it as 
+        the 3rd parameter in the React.createElement call.
+    
+    */
 
     const element = (
       <>

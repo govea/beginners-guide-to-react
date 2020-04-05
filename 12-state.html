@@ -5,8 +5,17 @@
   <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
   <script type="text/babel">
     function Greeting() {
-      const [name, setName] = React.useState('')
-      const handleChange = event => setName(event.target.value)
+      // the useState hook: it accepts the initial value
+      // const [name, setName] = React.useState('')
+      
+      // equivalent to:
+      const stateArray = React.useState('');
+      console.log(stateArray);
+      const name = stateArray[0];
+      const setName = stateArray[1];
+
+
+      const handleChange = event => setName(event.target.value) 
       return (
         <div>
           <form>

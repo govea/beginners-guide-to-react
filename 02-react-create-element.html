@@ -1,13 +1,22 @@
 <body>
   <div id="root"></div>
+  <!-- including react to be able to create react elements -->
   <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  
+  <!-- including react-dom to be able to render elements to the DOM -->
   <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
   <script type="text/javascript">
     const rootElement = document.getElementById('root')
-    const element = React.createElement('div', {
-      className: 'container',
-      children: 'Hello World',
-    })
+    const element = React.createElement(
+      'div', {
+        className: 'container',
+        children: React.createElement('span', null, 'Hello', 'World')
+      }, 
+      // subsequent parameters are put in an array inside the 'children' property
+      // 'Hello World', 
+      // 'Bye World'
+    )
+    console.log(element);
     ReactDOM.render(element, rootElement)
   </script>
 </body>

@@ -44,26 +44,47 @@
   </style>
   <script type="text/babel">
     function Tilt({children}) {
-      const tiltRef = React.useRef()
+      const tiltRef = React.useRef()  // the reason useRef is an object with a current property is to that we can 
+                                      // mutate the value to anything we want without triggering a re-render of our component.
 
+      console.log(tiltRef.current)  // undefined because at this point the React node has not been created yet.
+      
+      // useEffect runs after React has rendered to the DOM...
       React.useEffect(() => {
-        const tiltNode = tiltRef.current
+        console.log('useEffect')
+        console.log(tiltRef.current)  // that's why, here tiltRef.current is <div class="tilt-root">...</div>  - and not undefined as in line 49
+        const tiltNode = tiltRef.current  // 
+        
         const vanillaTiltOptions = {
           max: 25,
           speed: 400,
           glare: true,
           'max-glare': 0.5,
         }
+        // VanillaTilt takes a DOM node (not a React node)
         VanillaTilt.init(tiltNode, vanillaTiltOptions)
+
+        // this function will be called on every update of the component
         return () => {
-          tiltNode.vanillaTilt.destroy()
+          // this is executed when the show tilt checkbox is cleared.
+
+          // to avoid memory leaks
+          // because there might be reference to DOM elements from VanillaTilt
+          tiltNode.vanillaTilt.destroy()  // removes references form VanillaTilt to the DOM element, and any event handlers.
         }
-      }, [])
+      }, [])  // empty dependency array: this means 2 things: 
+              // 1) lines 53-64 will be executed when the component is initially mounted to the page
+              // 2) lines 60-63 when the component is unmounted from the page.
 
       return (
+        // This is a React element, not a DOM element.
+        // We need the DOM element to provide it to VanillaTilt
         <div ref={tiltRef} className="tilt-root">
           <div className="tilt-child">{children}</div>
         </div>
+
+        // You can use refs for DOM elements as used in this example, 
+        // but also for any value we want to keep track of and mutate over time without triggering a re-render of our component.
       )
     }
 

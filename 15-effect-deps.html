@@ -10,8 +10,12 @@
       )
 
       React.useEffect(() => {
+        console.log('Greeting useEffect')
         window.localStorage.setItem('name', name)
-      }, [name])
+      }, [name])  // tip: we can pass a dependency array to execute useEffect only when name changes.
+
+      /* npm i eslint-plugin-react-hooks 
+      to help you keep your dependency array updated.*/
 
       const handleChange = event => setName(event.target.value)
 
@@ -29,6 +33,7 @@
     function App() {
       const [count, setCount] = React.useState(0)
       return (
+        // a change in count, triggers a re-render in App, which triggers a re-render in Greeting.
         <>
           <button onClick={() => setCount(c => c + 1)}>{count}</button>
           <Greeting />
